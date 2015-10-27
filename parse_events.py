@@ -40,6 +40,9 @@ bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 eventTypes = data.groupby(['event_type'])
 boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax', 'bound_month'])
 
+eventsInBox = pd.DataFrame(columns=('eventType', 'numEvents','month', 'year', 'xmin', 'xmax', 'ymin', 'ymax'))
+
+
 for boundKey, bounds in boundBox:
 	ymin = bounds['ymin'][bounds['ymin'].keys()[0]]
 	xmin = bounds['xmin'][bounds['xmin'].keys()[0]]
@@ -54,12 +57,11 @@ for boundKey, bounds in boundBox:
 		eventType = eventType[eventType['longitude'] >= xmin]
 		eventType = eventType[eventType['longitude'] <= xmax]
 		eventType = eventType[eventType['month'] == month]
-		# Loop through bound_month
-		if len(eventType) > 0:
-			print "Event Type: ", event, month
-			print "Event Length: ", len(eventType)
 
-
+		yearlyGroup = eventType.groupby(['year'])
+		for year, eventsInYear in yearlyGroup:
+			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
+			eventsInBox = eventsInBox.append(temp)
 
 			
 
