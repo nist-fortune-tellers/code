@@ -1,10 +1,12 @@
 import pandas as pd
 import dateutil.parser
+import time
 
 def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
 	return
 
+start_time = time.time()
 data = pd.read_csv('data/events_train.csv')
 # basic cleaning
 data = data[pd.notnull(data['event_id'])]
@@ -49,7 +51,7 @@ for boundKey, bounds in boundBox:
 	ymax = bounds['ymax'][bounds['ymax'].keys()[0]]
 	xmax = bounds['xmax'][bounds['xmax'].keys()[0]]
 	month = bounds['bound_month'][bounds['bound_month'].keys()[0]]
-	print "\nBounds: ", xmin, xmax, ymin, ymax
+	#print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:
 		# Filter Out All Events Not In Boundry Box
 		eventType = eventType[eventType['latitude'] >= ymin]
@@ -66,8 +68,5 @@ for boundKey, bounds in boundBox:
 			
 
 
-
-
-
-print data['created_tstamp'][:5]
-print bounds['end'][:5]
+eventsInBox.to_csv("out.csv", sep='\t', encoding='utf-8')
+print "My program took", time.time() - start_time, "to run"
