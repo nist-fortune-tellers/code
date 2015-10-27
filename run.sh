@@ -1,1 +1,1 @@
-python prediction_baseline.py test.txt
+python parse_events.py test.txt
