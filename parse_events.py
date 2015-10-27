@@ -1,6 +1,6 @@
 import pandas as pd
 import dateutil.parser
-import statsmodels.formula.api as sm
+#import statsmodels.formula.api as sm
 
 def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
@@ -33,16 +33,21 @@ convert_tstamp(data, 'confirmed_tstamp')
 convert_tstamp(data, 'closed_tstamp')
 convert_tstamp(data, 'start_tstamp')
 
-eventTypes = data.groupby(['event_type'])
-boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax'])
+data['month']=data.apply(lambda row: row['created_tstamp'].month, axis=1)
+data['year']=data.apply(lambda row: row['created_tstamp'].year, axis=1)
+bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
+bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 
-for bounds in boundBox:
-	for event, eventType in eventTypes:
-			# Filter Out All Events Not In Boundry Box
-			eventType = eventType[eventType['latitude'] >= bounds['ymin'] && eventType['latitude'] <= bounds['ymax']) && (eventType['longitude'] >= bounds['xmin'] && eventType['longitude'] <= bounds['xmax']]
-			
+joined = data.join(bounds)
+
+groups = data.groupby(['event_type', 'ymin', 'xmin', 'ymax', 'xmax'])
+
+for key, group in groups:
+	# Filter Out All Events Not In Boundry Box
+	group = group[group['latitude'] >= key['ymin'] & group['latitude'] <= key['ymax']) & (group['longitude'] >= key['xmin'] & group['longitude'] <= key['xmax']]
+	print key
 
 
 
-print data['created_tstamp'][:5]
+print data[:5]
 print bounds['end'][:5]
