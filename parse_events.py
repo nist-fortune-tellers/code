@@ -5,7 +5,7 @@ def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
 	return
 
-data = pd.read_csv('events_train.csv')
+data = pd.read_csv('data/events_train.csv')
 # basic cleaning
 data = data[pd.notnull(data['event_id'])]
 data = data[pd.notnull(data['event_description'])]
@@ -22,7 +22,7 @@ data = data[pd.notnull(data['number_of_responders'])]
 data = data[pd.notnull(data['lanes_affected'])]
 
 bound_cols = ['lat_lower', 'long_lower', 'lat_upper', 'long_upper', 'tstamp_begin', 'tstamp_end']
-bounds = pd.read_csv('prediction_trials.tsv', sep='\t', names=bound_cols)
+bounds = pd.read_csv('data/prediction_trials.tsv', sep='\t', names=bound_cols)
 
 convert_tstamp(bounds, 'tstamp_begin')
 convert_tstamp(bounds, 'tstamp_end')
