@@ -9,6 +9,9 @@ def convert_tstamp(df, col_index):
 
 start_time = time.time()
 data = pd.read_csv('data/events_train.csv')
+
+print 'Beginning Basic Cleaning'
+
 # basic cleaning
 data = data[pd.notnull(data['created_tstamp'])]
 data = data[pd.notnull(data['event_type'])]
@@ -24,13 +27,16 @@ convert_tstamp(bounds, 'end')
 
 convert_tstamp(data, 'created_tstamp')
 
-print 'Beginning Time Consuming Lambdas'
-
+print 'Lambda 1/4'
 data['month']=data.apply(lambda row: row['created_tstamp'].month, axis=1)
+print 'Lambda 2/4'
 data['year']=data.apply(lambda row: row['created_tstamp'].year, axis=1)
+print 'Lambda 3/4'
 bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
+print 'Lambda 4/4'
 bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 
+print 'Group Bys'
 eventTypes = data.groupby(['event_type'])
 boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax', 'bound_month'])
 
@@ -57,8 +63,11 @@ for boundKey, bounds in boundBox:
 		for year, eventsInYear in yearlyGroup:
 			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
 			eventsInBox = eventsInBox.append(temp)
-	if len(eventsInBox) > 10:
 		break
+	break
+
+print 'Creating CSV'
+
 eventsInBoxCols = ['eventType', 'numEvents','month', 'year', 'xmin', 'xmax', 'ymin', 'ymax']			
 eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, columns=eventsInBoxCols, encoding='utf-8')
 print "My program took", time.time() - start_time, "to run"
