@@ -38,13 +38,14 @@ bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
 bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 
 eventTypes = data.groupby(['event_type'])
-boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax'])
+boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax', 'bound_month'])
 
-for boundKey, vals in boundBox:
-	ymin = vals['ymin'][vals['ymin'].keys()[0]]
-	xmin = vals['xmin'][vals['xmin'].keys()[0]]
-	ymax = vals['ymax'][vals['ymax'].keys()[0]]
-	xmax = vals['xmax'][vals['xmax'].keys()[0]]
+for boundKey, bounds in boundBox:
+	ymin = bounds['ymin'][bounds['ymin'].keys()[0]]
+	xmin = bounds['xmin'][bounds['xmin'].keys()[0]]
+	ymax = bounds['ymax'][bounds['ymax'].keys()[0]]
+	xmax = bounds['xmax'][bounds['xmax'].keys()[0]]
+	month = bounds['bound_month'][bounds['bound_month'].keys()[0]]
 	print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:
 		# Filter Out All Events Not In Boundry Box
@@ -52,9 +53,14 @@ for boundKey, vals in boundBox:
 		eventType = eventType[eventType['latitude'] <= ymax]
 		eventType = eventType[eventType['longitude'] >= xmin]
 		eventType = eventType[eventType['longitude'] <= xmax]
+		eventType = eventType[eventType['month'] == month]
+		# Loop through bound_month
 		if len(eventType) > 0:
-			print "Event Type: ", event
+			print "Event Type: ", event, month
 			print "Event Length: ", len(eventType)
+
+
+
 			
 
 
