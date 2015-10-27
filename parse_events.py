@@ -61,12 +61,9 @@ for boundKey, bounds in boundBox:
 		yearlyGroup = eventType.groupby(['year'])
 		for year, eventsInYear in yearlyGroup:
 			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
-			eventsInBox = eventsInBox.append(temp)
-		break
-	break
+			eventsInBox = eventsInBox.append(temp) 
 
 print 'Creating CSV'
-
-eventsInBoxCols = ['eventType', 'numEvents','month', 'year', 'xmin', 'xmax', 'ymin', 'ymax']			
-eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, columns=eventsInBoxCols, encoding='utf-8')
+		
+eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index=False)
 print "My program took", time.time() - start_time, "to run"
