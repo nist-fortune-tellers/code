@@ -40,19 +40,24 @@ bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 eventTypes = data.groupby(['event_type'])
 boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax'])
 
-for bounds in boundBox:
-	print "Printing Bounds"
-	print bounds
-	print type(bounds)
+for boundKey, vals in boundBox:
+	ymin = vals['ymin'][vals['ymin'].keys()[0]]
+	xmin = vals['xmin'][vals['xmin'].keys()[0]]
+	ymax = vals['ymax'][vals['ymax'].keys()[0]]
+	xmax = vals['xmax'][vals['xmax'].keys()[0]]
+	print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:
-		print "Printing Event"
-		print event
-		print type(event)
 		# Filter Out All Events Not In Boundry Box
-		eventType = eventType[eventType['latitude'] >= bounds['ymin'] and eventType['latitude'] <= bounds['ymax'] and eventType['longitude'] >= bounds['xmin'] and eventType['longitude'] <= bounds['xmax']]
-		break
-	break
-	
+		eventType = eventType[eventType['latitude'] >= ymin]
+		eventType = eventType[eventType['latitude'] <= ymax]
+		eventType = eventType[eventType['longitude'] >= xmin]
+		eventType = eventType[eventType['longitude'] <= xmax]
+		if len(eventType) > 0:
+			print "Event Type: ", event
+			print "Event Length: ", len(eventType)
+			
+
+
 
 
 
