@@ -58,7 +58,6 @@ for boundKey, bounds in boundBox:
 		eventType = eventType[eventType['longitude'] >= xmin]
 		eventType = eventType[eventType['longitude'] <= xmax]
 		eventType = eventType[eventType['month'] == month]
-
 		yearlyGroup = eventType.groupby(['year'])
 		for year, eventsInYear in yearlyGroup:
 			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
