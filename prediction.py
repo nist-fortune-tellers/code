@@ -4,7 +4,7 @@ import csv
 import statsmodels.formula.api as sm
 
 start_time = time.time()
-eventsInBox = pd.read_csv('output/aggregated.tsv', sep='\t')
+eventsInBox = pd.read_csv('output/aggregated.csv')
 
 groupedEvents = eventsInBox.groupby(['eventType', 'month', 'xmin', 'ymin', 'xmax', 'ymax'])		#gives eventtype of a month in a bounding box
 
@@ -35,7 +35,7 @@ for key, group in groupedEvents:
 	predictedEvents = predictedEvents.append(temp)
 
 
-predictedEvents.to_csv("predicted.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
+predictedEvents.to_csv("output/predicted.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
 
 
 
