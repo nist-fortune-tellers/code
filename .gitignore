@@ -3,3 +3,4 @@
 *.pem
 *.csv
 *.tsv
+*.DS_STORE

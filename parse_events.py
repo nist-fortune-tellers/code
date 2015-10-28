@@ -7,6 +7,11 @@ def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
 	return
 
+#Open Files for Writing CSV
+csvFile = open('output/aggregated.csv', 'wt')
+csvWriter = csv.writer(csvFile)
+csvWriter.writerow(['eventType', 'numEvents', 'month', 'year', 'xmin', 'xmax', 'ymin', 'ymax'])
+
 start_time = time.time()
 data = pd.read_csv('data/events_train.csv')
 
@@ -51,7 +56,7 @@ print 'Done Processing. Beginning Main Loop.'
 counter = 1
 size = 0
 
-for boundKey, bounds in boundBox:
+for _, _ in boundBox:
 	size+=1
 
 print size
@@ -74,10 +79,7 @@ for boundKey, bounds in boundBox:
 		eventType = eventType[eventType['month'] == month]
 		yearlyGroup = eventType.groupby(['year'])
 		for year, eventsInYear in yearlyGroup:
-			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': [xmin], 'xmax': [xmax], 'ymin': [ymin], 'ymax': [ymax]})
-			eventsInBox = eventsInBox.append(temp)
+			csvWriter.writerow([event, len(eventsInYear), month, year, xmin, xmax, ymin, ymax])
 
-		
-eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
-
+csvFile.close()
 print "My program took", time.time() - start_time, "to run"
