@@ -44,8 +44,6 @@ bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
 print 'Lambda 4/4'
 bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 
-print data[data['year'] == 2015]
-
 print 'Group Bys'
 eventTypes = data.groupby(['event_type'])
 boundBox = bounds.groupby(['ymin', 'xmin', 'ymax', 'xmax', 'bound_month'])
