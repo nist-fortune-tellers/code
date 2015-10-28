@@ -22,9 +22,11 @@ data = data[data['location'] != 'test']
 bound_cols = ['ymin', 'xmin', 'ymax', 'xmax', 'begin', 'end']
 bounds = pd.read_csv('data/prediction_trials.tsv', sep='\t', names=bound_cols)
 
+print 'Timestamp Conversion'
 convert_tstamp(bounds, 'begin')
 convert_tstamp(bounds, 'end')
 
+data['old_tstamp'] = data['created_tstamp']
 convert_tstamp(data, 'created_tstamp')
 
 print 'Lambda 1/4'
@@ -35,6 +37,8 @@ print 'Lambda 3/4'
 bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
 print 'Lambda 4/4'
 bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
+
+print data[data['year'] == 2015]
 
 print 'Group Bys'
 eventTypes = data.groupby(['event_type'])
@@ -70,7 +74,7 @@ for boundKey, bounds in boundBox:
 		eventType = eventType[eventType['month'] == month]
 		yearlyGroup = eventType.groupby(['year'])
 		for year, eventsInYear in yearlyGroup:
-			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
+			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': [xmin], 'xmax': [xmax], 'ymin': [ymin], 'ymax': [ymax]})
 			eventsInBox = eventsInBox.append(temp)
 
 		
