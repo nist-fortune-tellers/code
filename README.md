@@ -1,8 +1,7 @@
-How to run: ./run.sh
+# Basics
+## Setup
+In the `data/` directory, place the `events_train.csv` provided by the NIST group. The separators, `prediction_trials.tsv`, are already provided in the repository.
 
-Requirement: place 'events_train.csv' and 'prediction_trials.tsv' files to this script folder.
+## Running
+Simply navigate to the project directory, and type `./run.sh`. There will be appropriate output and progress indicators.
 
-prediction_baseline.py: program to predict the number of events. 
-Algorithm: predict the value using average event counts in 2014 for one month, within the same geo bounding box.
-
-By Dihong
