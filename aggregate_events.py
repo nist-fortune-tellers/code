@@ -73,7 +73,7 @@ for boundKey, bounds in boundBox:
 	month = bounds['bound_month'][bounds['bound_month'].keys()[0]]
 	#Print Every 100 (since this runs slowwww)
 	if counter % 100 == 0:
-		print counter, '/', size, '-', int((counter/fsize)*100), '%'
+		print 'Aggregating Events:', counter, '/', size, '-', int((counter/fsize)*100), '%'
 	counter += 1
 	#print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:

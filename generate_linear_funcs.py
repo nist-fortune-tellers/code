@@ -23,7 +23,7 @@ print counter, '/', size
 for key, group in groupedEvents:
 	#Print Every 1000 (since this runs fast)
 	if counter % 1000 == 0:
-		print counter, '/', size, '-', int((counter/fsize)*100), '%'
+		print 'Generating Linear Funcs:', counter, '/', size, '-', int((counter/fsize)*100), '%'
 	counter += 1
 	yearMin = group['year'].min()
 	yearMax = group['year'].max()
