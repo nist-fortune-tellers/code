@@ -8,7 +8,7 @@ def convert_tstamp(df, col_index):
 	return
 
 #Open Files for Writing CSV
-csvFile = open('output/aggregated.csv', 'wt')
+csvFile = open('output/aggregated.csv', 'w')
 
 csvWriter = csv.writer(csvFile)
 csvWriter.writerow(['eventType', 'numEvents', 'month', 'year', 'xmin', 'xmax', 'ymin', 'ymax'])
