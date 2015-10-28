@@ -1,7 +1,5 @@
 *events_train.csv
 *.pyc
 *.pem
-<<<<<<< HEAD
 *.csv
-=======
->>>>>>> withoutput
+*.tsv
