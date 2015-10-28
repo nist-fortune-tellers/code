@@ -9,7 +9,7 @@ def convert_tstamp(df, col_index):
 	return
 
 #Create Output Path if it does Not Exist
-if not os.path.exists(directory):
+if not os.path.exists('output'):
     os.makedirs('output')
 
 #Open Files for Writing CSV
