@@ -25,7 +25,6 @@ bounds['year']=bounds.apply(lambda row: row['begin'].year, axis=1)
 # print predicted[:5]
 
 for x in range(0, len(bounds)):
-	bound = bounds.iloc[[x]]
 	ymin = bound['ymin'][x]
 	xmin = bound['xmin'][x]
 	ymax = bound['ymax'][x]
