@@ -1,7 +1,7 @@
 # Basics
 ## Setup
 ### Dependencies
-You need a working Python/Pip installation.
+You need a working Python 2.X and Pip installation.
 Use Pip to install the following dependencies:
 - `pandas`
 - `statsmodels`
