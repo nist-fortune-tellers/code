@@ -2,5 +2,5 @@
 *.pem
 *.csv
 *.tsv
-*.DS_STORE
+*DS_Store
 *.txt
