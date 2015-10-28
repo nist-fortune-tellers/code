@@ -7,6 +7,10 @@ def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
 	return
 
+#Create Output Path if it does Not Exist
+if not os.path.exists(directory):
+    os.makedirs('output')
+
 #Open Files for Writing CSV
 csvFile = open('output/aggregated.csv', 'w')
 
