@@ -13,7 +13,7 @@ if not os.path.exists('output'):
     os.makedirs('output')
 
 #Open Files for Writing CSV
-csvFile = open('output/aggregated.csv', 'w')
+csvFile = open('output/aggregated_events.csv', 'w')
 csvWriter = csv.writer(csvFile)
 # Write First Header Column
 csvWriter.writerow(['eventType', 'numEvents', 'month', 'year', 'xmin', 'xmax', 'ymin', 'ymax'])
@@ -62,16 +62,18 @@ size = 0
 
 for _, _ in boundBox:
 	size+=1
+fsize=float(size)
 
-print size
-
+print counter, '/', size
 for boundKey, bounds in boundBox:
 	ymin = bounds['ymin'][bounds['ymin'].keys()[0]]
 	xmin = bounds['xmin'][bounds['xmin'].keys()[0]]
 	ymax = bounds['ymax'][bounds['ymax'].keys()[0]]
 	xmax = bounds['xmax'][bounds['xmax'].keys()[0]]
 	month = bounds['bound_month'][bounds['bound_month'].keys()[0]]
-	print counter, '/', size
+	#Print Every 100 (since this runs slowwww)
+	if counter % 100 == 0:
+		print counter, '/', size, '-', int((counter/fsize)*100), '%'
 	counter += 1
 	#print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:

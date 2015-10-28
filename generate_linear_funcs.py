@@ -3,19 +3,27 @@ import time
 import csv
 import statsmodels.formula.api as sm
 
+print 'Starting Function Generation...'
 start_time = time.time()
-eventsInBox = pd.read_csv('output/aggregated.csv')
+
+eventsInBox = pd.read_csv('output/aggregated_events.csv')
 
 groupedEvents = eventsInBox.groupby(['eventType', 'month', 'xmin', 'ymin', 'xmax', 'ymax'])		#gives eventtype of a month in a bounding box
 
 predictedEvents = pd.DataFrame(columns=('eventType','month', 'xmin', 'xmax', 'ymin', 'ymax', 'intercept', 'slope'))
+
+#Counter Vars
 size = 0
 for _, _ in groupedEvents:
 	size += 1
-
+fsize = float(size)
 counter = 1
+
+print counter, '/', size
 for key, group in groupedEvents:
-	print counter, '/', size
+	#Print Every 1000 (since this runs fast)
+	if counter % 1000 == 0:
+		print counter, '/', size, '-', int((counter/fsize)*100), '%'
 	counter += 1
 	yearMin = group['year'].min()
 	yearMax = group['year'].max()
@@ -35,7 +43,7 @@ for key, group in groupedEvents:
 	predictedEvents = predictedEvents.append(temp)
 
 
-predictedEvents.to_csv("output/predicted.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
+predictedEvents.to_csv("output/linear_funcs.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
 
 
 print "My program took", time.time() - start_time, "to run"
