@@ -44,12 +44,22 @@ eventsInBox = pd.DataFrame(columns=('eventType', 'numEvents','month', 'year', 'x
 
 print 'Done Processing. Beginning Main Loop.'
 
+counter = 1
+size = 0
+
+for boundKey, bounds in boundBox:
+	size+=1
+
+print size
+
 for boundKey, bounds in boundBox:
 	ymin = bounds['ymin'][bounds['ymin'].keys()[0]]
 	xmin = bounds['xmin'][bounds['xmin'].keys()[0]]
 	ymax = bounds['ymax'][bounds['ymax'].keys()[0]]
 	xmax = bounds['xmax'][bounds['xmax'].keys()[0]]
 	month = bounds['bound_month'][bounds['bound_month'].keys()[0]]
+	print counter, '/', size
+	counter += 1
 	#print "\nBounds: ", xmin, xmax, ymin, ymax
 	for event, eventType in eventTypes:
 		# Filter Out All Events Not In Boundry Box
@@ -61,9 +71,9 @@ for boundKey, bounds in boundBox:
 		yearlyGroup = eventType.groupby(['year'])
 		for year, eventsInYear in yearlyGroup:
 			temp = pd.DataFrame({'eventType': [event] , 'numEvents': [len(eventsInYear)], 'month': [month], 'year':[year], 'xmin': xmin, 'xmax': xmax, 'ymin': ymin, 'ymax': ymax})
-			eventsInBox = eventsInBox.append(temp) 
+			eventsInBox = eventsInBox.append(temp)
 
-print 'Creating CSV'
 		
-eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index=False)
+eventsInBox.to_csv("out.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
+
 print "My program took", time.time() - start_time, "to run"
