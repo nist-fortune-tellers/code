@@ -1,1 +1,2 @@
-python parse_events.py test.txt
+python parse_events.py
+python prediction.py

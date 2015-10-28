@@ -38,12 +38,4 @@ for key, group in groupedEvents:
 predictedEvents.to_csv("output/predicted.csv", quoting=csv.QUOTE_NONE, encoding='utf-8', index = False)
 
 
-
-
-
-
-
-
-
-
 print "My program took", time.time() - start_time, "to run"
