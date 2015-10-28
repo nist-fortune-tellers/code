@@ -58,9 +58,6 @@ for x in range(0, len(bounds)):
 	ptemp = ptemp[compare(xmax, ptemp['xmax'], 6)]
 	ptemp = ptemp[ptemp['month'] == month]
 
-	#Exclusion Test
-	excluTest = excluTest.append(ptemp)
-
 	#Eventual Output For Eevents
 	eventOutput = []
 
