@@ -14,8 +14,8 @@ if not os.path.exists('output'):
 
 #Open Files for Writing CSV
 csvFile = open('output/aggregated.csv', 'w')
-
 csvWriter = csv.writer(csvFile)
+# Write First Header Column
 csvWriter.writerow(['eventType', 'numEvents', 'month', 'year', 'xmin', 'xmax', 'ymin', 'ymax'])
 
 start_time = time.time()
