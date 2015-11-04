@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 eventsInBox = pd.read_csv('output/reference_aggregated_events.csv')
-groupedEvents = eventsInBox.groupby(['eventType', 'month', 'xmin', 'ymin', 'xmax', 'ymax'])
+groupedEvents = eventsInBox.groupby(['xmin', 'ymin', 'xmax', 'ymax', 'month', 'eventType'])
 
 onlyPlot = 20
 for key, group in groupedEvents:
