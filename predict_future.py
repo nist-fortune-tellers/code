@@ -12,12 +12,20 @@ start_time = time.time()
 
 print 'Look Into My Crystal Ball......'
 
+is2014Prediction = False
+if len(sys.argv) == 1 and sys.argv[0] == "2014":
+	is2014Prediction = True
+	print "2014 Options Detected. Excluding Years >= 2014, and using alternate 2014 input."
+
 #Open Files for Writing CSV
 csvFile = open('output/prediction_submissions_3.txt', 'w')
 csvWriter = csv.writer(csvFile, delimiter='\t')
 
 bound_cols = ['ymin', 'xmin', 'ymax', 'xmax', 'begin', 'end']
-bounds = pd.read_csv('data/prediction_trials.tsv', sep='\t', names=bound_cols)
+if is2014Prediction:
+	bounds = pd.read_csv('data/prediction_trials_2014.tsv', sep='\t', names=bound_cols)
+else:
+	bounds = pd.read_csv('data/prediction_trials.tsv', sep='\t', names=bound_cols)
 
 predicted  = pd.read_csv('output/linear_funcs.csv')	
 # Keys: 'eventType','month', 'xmin', 'xmax', 'ymin', 'ymax', 'intercept', 'slope'

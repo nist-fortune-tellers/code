@@ -3,6 +3,13 @@ import dateutil.parser
 import time
 import csv
 import os
+import sys
+
+is2014Prediction = False
+if len(sys.argv) == 1 and sys.argv[0] == "2014":
+	is2014Prediction = True
+	print "2014 Options Detected. Excluding Years >= 2014, and using alternate 2014 input."
+
 
 def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))
@@ -30,6 +37,7 @@ data = data[pd.notnull(data['latitude'])]	#	y
 data = data[pd.notnull(data['longitude'])]	#	x
 data = data[data['location'] != 'test']
 
+
 bound_cols = ['ymin', 'xmin', 'ymax', 'xmax', 'begin', 'end']
 bounds = pd.read_csv('data/prediction_trials.tsv', sep='\t', names=bound_cols)
 
@@ -48,6 +56,10 @@ print 'Lambda 3/4'
 bounds['bound_month']=bounds.apply(lambda row: row['begin'].month, axis=1)
 print 'Lambda 4/4'
 bounds['bound_year']=bounds.apply(lambda row: row['begin'].year, axis=1)
+
+# Filter out 2014+ data if applicable
+if is2014Prediction:
+	data = data[data['year'] < 2014]
 
 print 'Group Bys'
 eventTypes = data.groupby(['event_type'])
