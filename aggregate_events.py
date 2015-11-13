@@ -6,7 +6,7 @@ import os
 import sys
 
 is2014Prediction = False
-if len(sys.argv) == 1 and sys.argv[0] == "2014":
+if len(sys.argv) == 1:
 	is2014Prediction = True
 	print "2014 Options Detected. Excluding Years >= 2014, and using alternate 2014 input."
 
