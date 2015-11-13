@@ -18,5 +18,7 @@ Read `detector_lane_inventory.csv` and for each line in the CSV, we get the `lan
 - Get Std. Dev
 - Iterate through array of flows
    - If Not within 1 Std. Dev.
-      - Correct to Median Value.
-      - Class
+      - Correct Flow to Median Value.
+      - Set Changed = true
+      - Set Reason to 2
+
