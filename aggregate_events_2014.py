@@ -5,7 +5,7 @@ import csv
 import os
 import sys
 
-is2014Prediction = False
+is2014Prediction = True
 
 def convert_tstamp(df, col_index):
 	df[col_index] = pd.to_datetime(df.apply(lambda row: row[col_index], axis=1))

@@ -3,6 +3,9 @@ import time
 import csv
 import statsmodels.formula.api as sm
 
+for arg in sys.argv: 1
+    print arg
+
 print 'Starting Function Generation...'
 start_time = time.time()
 

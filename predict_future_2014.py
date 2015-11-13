@@ -12,7 +12,7 @@ start_time = time.time()
 
 print 'Look Into My Crystal Ball......'
 
-is2014Prediction = False
+is2014Prediction = True
 
 #Open Files for Writing CSV
 csvFile = open('output/prediction_submissions_3.txt', 'w')
